@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CountriesModule } from './countries/countries.module';
 import { TravelPlansModule } from './travel-plans/travel-plans.module';
+import { MiddlewareConsumer } from '@nestjs/common';
+import { NestModule } from '@nestjs/common';
+import { ApiLoggingMiddleware } from './extra/middleware/api-logging.middleware';
 
 @Module({
   imports: [
@@ -10,4 +13,8 @@ import { TravelPlansModule } from './travel-plans/travel-plans.module';
     TravelPlansModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(ApiLoggingMiddleware).forRoutes('countries', 'travel-plans');
+  }
+}

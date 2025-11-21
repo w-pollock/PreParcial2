@@ -1,4 +1,4 @@
-# PreParcial 2 - William Pollock
+# PreParcial 2 - William Pollock (README DEL PARCIAL 2 AL FINAL)
 
 ## 1. Cómo ejecutar el proyecto
 - Descargar Node.js
@@ -142,3 +142,9 @@ El plan aparezca luego en 'GET /travel-plans'.
 Tomar el _id del plan creado.
 
 'GET /travel-plans/<id>' --> debería devolver ese plan.
+
+## Modificaciones Parcial 2
+Para implementar el endpoint protegido de los países, hice el archivo 'admin-token.guard.ts', donde implementé un header y un token
+para tener el acceso de borrar países. Estos dos se revisan en la función 'canActivate', la cual verifica que se tengan ambos para borrar un país. Además, en el service de Countries también agregué la función 'deleteFromCache', la cual verifica que el país que se quiera borrar exista dentro del caché y  que no tenga ningún travel plan (ya que si tiene uno o más no se puede borrar). Finalmente lo puse en el controlador como un @Delete y en el módulo como un provider. Para probar el guard, se puede intentar borrar un país por Postman sin el header o el token (no debería dejarte borrarlo).
+
+Para el middleware de logging, creé el archivo 'api-logging.middleware.ts', el cual toma las peticiones y respuestas de las funciones y toma el tiempo que se toma en retornar la función (con ayuda de 'Date.now()'). Este toma el método de la petición, la URL, el código de estado y el tiempo que tomó en retornarlo y los retorna de forma que aparezcan dentro de la terminal de Nest cuando se haga una petición por Postman. Esto se puede validar haciendo cualquier prueba en Postman y después revisando que aparezca el log en la terminal.

@@ -7,6 +7,7 @@ import { Country } from './schemas/country.schema';
 import { CountrySchema } from './schemas/country.schema';
 import { COUNTRY_INFO_PROVIDER } from './external/country-info-provider.interface';
 import { RestCountriesService } from './external/restcountries.service';
+import { AdminTokenGuard } from './guards/admin-token.guard';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { RestCountriesService } from './external/restcountries.service';
       provide: COUNTRY_INFO_PROVIDER,
       useClass: RestCountriesService,
     },
+    AdminTokenGuard,
   ],
   controllers: [CountriesController],
   exports: [CountriesService],
